@@ -24,25 +24,25 @@ public class ProductController {
 		this.productService = productService;
 	}
 
-	@PostMapping(value = "/saveproduct", consumes = "application/json", produces = "text/plain")
+	@PostMapping(value = "/saveproduct", consumes = { "application/json", "application/xml" }, produces = "text/plain")
 	public ResponseEntity<String> addProduct(@RequestBody ProductEntity entity) {
 		String product = productService.addProduct(entity);
 		return new ResponseEntity<>(product, HttpStatus.CREATED);
 	}
 
-	@PostMapping(value = "/saveall", consumes = "application/json", produces = "text/plain")
+	@PostMapping(value = "/saveall", consumes = { "application/json", "application/xml" }, produces = "text/plain")
 	public ResponseEntity<String> addProducts(@RequestBody List<ProductEntity> entities) {
 		String products = productService.addProducts(entities);
 		return new ResponseEntity<>(products, HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/products", produces = "application/json")
+	@GetMapping(value = "/products", produces = { "application/json", "application/xml" })
 	public ResponseEntity<List<ProductEntity>> listProduct() {
 		List<ProductEntity> list = productService.getAllProducts();
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/product", produces = "application/json")
+	@GetMapping(value = "/product", produces = { "application/json", "application/xml" })
 	public ResponseEntity<ProductEntity> viewProduct(@RequestParam("id") Integer id) {
 		ProductEntity msg = productService.getProductById(id);
 		return new ResponseEntity<>(msg, HttpStatus.OK);
@@ -54,7 +54,7 @@ public class ProductController {
 		return new ResponseEntity<>(msg, HttpStatus.OK);
 	}
 
-	@PutMapping(value = "/update/{id}", produces = "text/plain", consumes = "application/json")
+	@PutMapping(value = "/update/{id}", produces = "text/plain", consumes = { "application/json", "application/xml" })
 	public ResponseEntity<String> updateProduct(@PathVariable("id") Integer id, @RequestBody ProductEntity entity) {
 		entity.setId(id);
 		String msg = productService.addProduct(entity);
